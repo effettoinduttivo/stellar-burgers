@@ -6,7 +6,7 @@ import {
   useSelector,
   useDispatch,
   makeOrder,
-  setOrderModalData,
+  clearOrderData,
   clearConstructor
 } from '@services';
 
@@ -36,7 +36,7 @@ export const BurgerConstructor: FC = () => {
   };
 
   const closeOrderModal = () => {
-    dispatch(setOrderModalData(null));
+    dispatch(clearOrderData());
     dispatch(clearConstructor());
   };
 

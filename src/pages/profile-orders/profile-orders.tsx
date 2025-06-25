@@ -3,14 +3,14 @@ import { FC, useEffect } from 'react';
 import { useDispatch, useSelector, getOrders } from '@services';
 
 export const ProfileOrders: FC = () => {
-  const { orders } = useSelector((store) => store.user);
+  const { orders, isOrdersLoaded } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (orders.length === 0) {
+    if (!isOrdersLoaded) {
       dispatch(getOrders());
     }
-  }, [dispatch]);
+  }, [isOrdersLoaded, dispatch]);
 
   return <ProfileOrdersUI orders={orders} />;
 };

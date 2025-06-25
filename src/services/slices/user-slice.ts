@@ -21,6 +21,7 @@ interface UserState {
   isAuthChecked: boolean;
   isAuthenticated: boolean;
   orders: TOrder[];
+  isOrdersLoaded: boolean;
   isLoading: boolean;
   error: SerializedError | null;
 }
@@ -30,6 +31,7 @@ const initialState: UserState = {
   isAuthChecked: false,
   isAuthenticated: false,
   orders: [],
+  isOrdersLoaded: false,
   isLoading: false,
   error: null
 };
@@ -164,6 +166,7 @@ const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.orders = [];
+        state.isOrdersLoaded = false;
         state.isAuthenticated = false;
         state.isLoading = false;
         state.isAuthChecked = true;
@@ -171,6 +174,7 @@ const userSlice = createSlice({
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;
         state.error = null;
+        state.isOrdersLoaded = false;
       })
       .addCase(getOrders.rejected, (state, action) => {
         state.isLoading = false;
@@ -178,8 +182,9 @@ const userSlice = createSlice({
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orders = action.payload;
         state.error = null;
+        state.orders = action.payload;
+        state.isOrdersLoaded = true;
       });
   }
 });

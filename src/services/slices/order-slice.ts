@@ -44,8 +44,12 @@ const orderSlice = createSlice({
     setOrderRequest: (state) => {
       state.orderRequest = true;
     },
-    setOrderModalData: (state, action) => {
-      state.orderModalData = action.payload;
+    clearOrderData: (state) => {
+      state.orderData = null;
+      state.orderModalData = null;
+      state.orderRequest = false;
+      state.isLoading = false;
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
@@ -62,7 +66,6 @@ const orderSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.orderData = action.payload.orders[0];
-        state.orderModalData = action.payload.orders[0];
       })
       .addCase(makeOrder.pending, (state) => {
         state.isLoading = true;
@@ -78,11 +81,10 @@ const orderSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.orderRequest = false;
-        state.orderData = action.payload;
         state.orderModalData = action.payload;
       });
   }
 });
 
-export const { setOrderRequest, setOrderModalData } = orderSlice.actions;
+export const { setOrderRequest, clearOrderData } = orderSlice.actions;
 export default orderSlice.reducer;
