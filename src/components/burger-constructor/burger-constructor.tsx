@@ -2,13 +2,7 @@ import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import {
-  useSelector,
-  useDispatch,
-  makeOrder,
-  clearOrderData,
-  clearConstructor
-} from '@services';
+import { useSelector, useDispatch, makeOrder, clearOrderData } from '@services';
 
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector((state) => state.burger);
@@ -37,7 +31,6 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     dispatch(clearOrderData());
-    dispatch(clearConstructor());
   };
 
   const price = useMemo(

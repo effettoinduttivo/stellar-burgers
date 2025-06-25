@@ -6,6 +6,7 @@ import {
 import { TOrder } from '@utils-types';
 import { getOrderByNumberApi, orderBurgerApi } from '@api';
 import { getOrders } from './user-slice';
+import { clearConstructor } from './constructor-slice';
 
 interface OrderState {
   orderData: TOrder | null;
@@ -33,6 +34,7 @@ export const makeOrder = createAsyncThunk(
   async (ingredients: string[], { dispatch }) => {
     const res = await orderBurgerApi(ingredients);
     await dispatch(getOrders());
+    dispatch(clearConstructor());
     return res.order;
   }
 );
