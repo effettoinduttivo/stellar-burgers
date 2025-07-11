@@ -14,7 +14,7 @@ import {
   registerUserApi,
   updateUserApi
 } from '@api';
-import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../../utils/cookie';
 
 interface UserState {
   user: TUser | null;
@@ -130,8 +130,16 @@ const userSlice = createSlice({
         state.error = null;
         state.isAuthChecked = true;
       })
-      .addCase(getUser.rejected, (state) => {
+      .addCase(getUser.pending, (state) => {
         state.user = null;
+        state.error = null;
+        state.isAuthenticated = false;
+        state.isLoading = true;
+        state.isAuthChecked = false;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.user = null;
+        state.error = action.error;
         state.isAuthenticated = false;
         state.isLoading = false;
         state.isAuthChecked = true;

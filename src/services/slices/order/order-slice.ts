@@ -5,8 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 import { getOrderByNumberApi, orderBurgerApi } from '@api';
-import { getOrders } from './user-slice';
-import { clearConstructor } from './constructor-slice';
+import { getOrders } from '../user/user-slice';
+import { clearConstructor } from '../constructor/constructor-slice';
 
 interface OrderState {
   orderData: TOrder | null;
