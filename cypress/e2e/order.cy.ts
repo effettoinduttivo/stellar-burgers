@@ -16,7 +16,7 @@ describe('Создание заказа', () => {
 
     cy.placeOrder();
 
-    cy.get(SELECTORS.modal).should('contain', '12345');
+    cy.get(SELECTORS.modal).contains('12345').should('exist');
     cy.closeModalByButton();
 
     cy.verifyConstructorIsEmpty();

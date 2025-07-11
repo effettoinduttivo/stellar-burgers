@@ -10,6 +10,7 @@ Cypress.Commands.add('initConstructorPage', () => {
   cy.intercept('POST', '**/api/orders', { fixture: 'order.json' }).as(
     'createOrder'
   );
+  cy.intercept('GET', '**/api/orders', { orders: [] }).as('getOrders');
 
   cy.setCookie('accessToken', 'test-access-token');
   cy.getCookie('accessToken').should('have.property', 'value', 'test-access-token');
@@ -52,8 +53,8 @@ Cypress.Commands.add('closeModalByOverlay', () => {
 
 Cypress.Commands.add('placeOrder', () => {
   cy.contains('Оформить заказ').click();
-  cy.wait('@createOrder');
   cy.get(SELECTORS.modal).should('exist');
+  cy.wait('@createOrder');
 });
 
 Cypress.Commands.add('verifyConstructorIsEmpty', () => {
