@@ -3,12 +3,14 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch, checkUserAuth, updateUser } from '@services';
 
 export const Profile: FC = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, isAuthChecked } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkUserAuth());
-  }, []);
+    if (!isAuthChecked) {
+      dispatch(checkUserAuth());
+    }
+  }, [isAuthChecked, dispatch]);
 
   const [formValue, setFormValue] = useState({
     name: user?.name || '',
